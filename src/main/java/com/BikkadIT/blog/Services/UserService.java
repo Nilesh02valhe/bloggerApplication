@@ -11,7 +11,7 @@ public interface UserService {
 
 	UserDto UpadateUser(UserDto user, Integer UserId);
 
-	UserDto getUserById(UserDto userId);
+	UserDto getUserById(Integer userId);
 
 	List<UserDto> getAllUsers();
 	

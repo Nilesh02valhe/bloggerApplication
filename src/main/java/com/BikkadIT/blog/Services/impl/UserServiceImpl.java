@@ -1,6 +1,7 @@
 package com.BikkadIT.blog.Services.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -8,7 +9,7 @@ import com.BikkadIT.blog.Entities.User;
 import com.BikkadIT.blog.Payloads.UserDto;
 import com.BikkadIT.blog.Repository.UserRepo;
 import com.BikkadIT.blog.Services.UserService;
-
+import com.BikkadIT.blog.Exceptions.*;
 public class UserServiceImpl implements UserService{
 	
 	@Autowired
@@ -23,30 +24,44 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public UserDto UpadateUser(UserDto user, Integer UserId) {
-		// TODO Auto-generated method stub
-		return null;
+	public UserDto UpadateUser(UserDto userDto, Integer UserId) {
+		User user = this.userRepo.findById(UserId)
+				.orElseThrow(() -> new ResourceNotFoundException("User","id",UserId));
+		user.setName(userDto.getName());
+		user.setEmail(userDto.getEmail());
+		user.setPassword(user.getPassword());
+		user.setAbout(userDto.getAbout());
+//		user.setId(userDto.getId());
+		
+		User updatedUser = this.userRepo.save(user);
+		UserDto userDto1 = this.userToDto(updatedUser);
+		return userDto1;
 	}
-
 	@Override
-	public UserDto getUserById(UserDto userId) {
-		// TODO Auto-generated method stub
-		return null;
+	public UserDto getUserById(Integer userId) {
+		User user = this.userRepo.findById(userId)
+				.orElseThrow(() -> new ResourceNotFoundException("User","id",userId));
+	
+		return this.userToDto(user);
+		
 	}
+	
 
 	@Override
 	public List<UserDto> getAllUsers() {
-		// TODO Auto-generated method stub
-		return null;
+		List<User> users = this.userRepo.findAll();
+		List<UserDto> userDtos = users.stream().map(user ->this.userToDto(user)).collect(Collectors.toList());
+		return userDtos;
 	}
 
 	@Override
 	public void deleteUser(Integer UserId) {
-		// TODO Auto-generated method stub
+		User user = this.userRepo.findById(UserId)
+		.orElseThrow(() -> new ResourceNotFoundException("User","id",UserId));
 		
 	}
 	
-	private User dtoToUser(UserDto userDto) {
+	public User dtoToUser(UserDto userDto) {
 		
 		User user= new User();
 		user.setId(userDto.getId());
@@ -67,6 +82,7 @@ public class UserServiceImpl implements UserService{
 		userDto.setAbout(user.getAbout());
 		return userDto;		
 	}
-	
 
+	
+	
 }
