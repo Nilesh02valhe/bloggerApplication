@@ -1,15 +1,19 @@
 package com.BikkadIT.blog.Services.impl;
 
 import java.util.List;
+
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.BikkadIT.blog.Entities.User;
 import com.BikkadIT.blog.Payloads.UserDto;
 import com.BikkadIT.blog.Repository.UserRepo;
 import com.BikkadIT.blog.Services.UserService;
 import com.BikkadIT.blog.Exceptions.*;
+
+@Service
 public class UserServiceImpl implements UserService{
 	
 	@Autowired
@@ -28,6 +32,7 @@ public class UserServiceImpl implements UserService{
 		User user = this.userRepo.findById(UserId)
 				.orElseThrow(() -> new ResourceNotFoundException("User","id",UserId));
 		user.setName(userDto.getName());
+	
 		user.setEmail(userDto.getEmail());
 		user.setPassword(user.getPassword());
 		user.setAbout(userDto.getAbout());
@@ -35,7 +40,7 @@ public class UserServiceImpl implements UserService{
 		
 		User updatedUser = this.userRepo.save(user);
 		UserDto userDto1 = this.userToDto(updatedUser);
-		return userDto1;
+		return userDto1;	
 	}
 	@Override
 	public UserDto getUserById(Integer userId) {
@@ -46,7 +51,6 @@ public class UserServiceImpl implements UserService{
 		
 	}
 	
-
 	@Override
 	public List<UserDto> getAllUsers() {
 		List<User> users = this.userRepo.findAll();
@@ -75,6 +79,7 @@ public class UserServiceImpl implements UserService{
 	
 	public UserDto userToDto(User user){
 		UserDto userDto= new UserDto();
+		
 		userDto.setId(user.getId());
 		userDto.setName(user.getName());
 		userDto.setEmail(user.getEmail());
@@ -82,7 +87,5 @@ public class UserServiceImpl implements UserService{
 		userDto.setAbout(user.getAbout());
 		return userDto;		
 	}
-
-	
 	
 }

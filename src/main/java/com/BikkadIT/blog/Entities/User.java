@@ -17,7 +17,7 @@ import lombok.Setter;
 @Setter
 public class User {
 		
-	@Id   // to generate primary key
+	@Id  // to generate primary key
 	@GeneratedValue(strategy= GenerationType.AUTO)
 	
 	private int id;
