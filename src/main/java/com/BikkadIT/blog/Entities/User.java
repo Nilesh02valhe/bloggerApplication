@@ -24,11 +24,11 @@ public class User {
 	
 	@Column (name="User_name", nullable = false, length = 100)// using for to change column name
 	private String name;
-	
+
 	private String email;
 	
 	private String password;
-	
+
 	private String about;
 
 }	

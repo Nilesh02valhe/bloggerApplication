@@ -29,11 +29,11 @@ public class UserController {
 	private UserService userService;
 	
 //	post====create user
-	@PostMapping()
+	@PostMapping("/")
 	public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto ){
 		
 		UserDto createUserDto = this.userService.createUser(userDto);
-		
+		System.out.println("Input Data: " + userDto);
 		return new ResponseEntity<UserDto>(createUserDto,HttpStatus.CREATED);
 
 		
@@ -50,7 +50,7 @@ public class UserController {
 //	delete ==== delete user
 	@DeleteMapping("/{userId}")
 	public ResponseEntity<?> DeleteUser(@PathVariable("userId") Integer uid ){
-		this.DeleteUser(uid);
+		this.userService.deleteUser(uid);
 		return new  ResponseEntity<ApiResponse>(new ApiResponse("User Deleted Successfully", true),HttpStatus.OK);
 		
 	}
@@ -62,13 +62,13 @@ public class UserController {
 		return ResponseEntity.ok(this.userService.getAllUsers());
 		
 	}
-	
+//	get Single user
 	@GetMapping("/{userId}")
 	public ResponseEntity<UserDto> getSingle(@PathVariable Integer userId){
 		
-		return ResponseEntity.ok(this.userService.getUserById(userId));
-		
+		return ResponseEntity.ok(this.userService.getUserById(userId));		
 	}
+	
 }
 
 
