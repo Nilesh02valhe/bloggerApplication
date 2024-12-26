@@ -21,6 +21,8 @@ import com.BikkadIT.blog.Payloads.ApiResponse;
 import com.BikkadIT.blog.Payloads.UserDto;
 import com.BikkadIT.blog.Services.UserService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("api/users")
 public class UserController {
@@ -30,7 +32,7 @@ public class UserController {
 	
 //	post====create user
 	@PostMapping("/")
-	public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto ){
+	public ResponseEntity<UserDto> createUser(@Valid  @RequestBody UserDto userDto ){
 		
 		UserDto createUserDto = this.userService.createUser(userDto);
 		System.out.println("Input Data: " + userDto);
@@ -40,7 +42,7 @@ public class UserController {
 	}
 //	put====Update user
 	@PutMapping("/{userId}")
-	public ResponseEntity<UserDto> UpdateUser(@RequestBody UserDto userDto, @PathVariable("userId") Integer uid){
+	public ResponseEntity<UserDto> UpdateUser(@Valid @RequestBody UserDto userDto, @PathVariable("userId") Integer uid){
 		UserDto updateUser = this.userService.UpadateUser(userDto, uid);
 		return ResponseEntity.ok(updateUser);
 
