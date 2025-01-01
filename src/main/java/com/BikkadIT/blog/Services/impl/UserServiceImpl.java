@@ -69,36 +69,37 @@ public class UserServiceImpl implements UserService{
 	public List<UserDto> getAllUsers() {
 		List<User> users = this.userRepo.findAll();
 		List<UserDto> userDtos = users.stream().map(user ->this.userToDto(user)).collect(Collectors.toList());
+		log.error("Get all record are found: {}");
 		return userDtos;
 	}
 	@Override
 	public void deleteUser(Integer UserId) {
 		User user = this.userRepo.findById(UserId)
 		.orElseThrow(() -> new ResourceNotFoundException("User","Id",UserId));
-		
+		log.error("delete by single record: {}"+ UserId);
 	}	
 	
 	public User dtoToUser(UserDto userDto) {
 		
-//		User user=this.modelmapper.map(userDto, User.class);
-		User user= new User();		
-		user.setId(userDto.getId());
-		user.setName(userDto.getName());
-		user.setEmail(userDto.getEmail());
-		user.setPassword(userDto.getPassword());
-		user.setAbout(userDto.getAbout());		
+		User user=this.modelmapper.map(userDto, User.class);
+//		User user= new User();		
+//		user.setId(userDto.getId());
+//		user.setName(userDto.getName());
+//		user.setEmail(userDto.getEmail());
+//		user.setPassword(userDto.getPassword());
+//		user.setAbout(userDto.getAbout());		
 		return user;
 		
 	}	
 	
 	public UserDto userToDto(User user){		
-//		UserDto userDto= this.modelmapper.map(user, UserDto.class);
-		UserDto userDto= new UserDto();	
-		userDto.setId(user.getId());
-		userDto.setName(user.getName());
-		userDto.setEmail(user.getEmail());
-		userDto.setPassword(user.getPassword());
-		userDto.setAbout(user.getAbout());
+		UserDto userDto= this.modelmapper.map(user, UserDto.class);
+//		UserDto userDto= new UserDto();	
+//		userDto.setId(user.getId());
+//		userDto.setName(user.getName());
+//		userDto.setEmail(user.getEmail());
+//		userDto.setPassword(user.getPassword());
+//		userDto.setAbout(user.getAbout());
 	
 		return userDto;		
 	}	

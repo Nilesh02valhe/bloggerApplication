@@ -3,6 +3,7 @@ package com.BikkadIT.blog.Controllers;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 //import org.springframework.http.HttpStatusCode;
@@ -22,9 +23,11 @@ import com.BikkadIT.blog.Payloads.UserDto;
 import com.BikkadIT.blog.Services.UserService;
 
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("api/users")
+@Slf4j
 public class UserController {
 	
 	@Autowired
@@ -35,6 +38,7 @@ public class UserController {
 	public ResponseEntity<UserDto> createUser(@Valid  @RequestBody UserDto userDto ){
 		
 		UserDto createUserDto = this.userService.createUser(userDto);
+		
 		System.out.println("Input Data: " + userDto);
 		return new ResponseEntity<UserDto>(createUserDto,HttpStatus.CREATED);
 

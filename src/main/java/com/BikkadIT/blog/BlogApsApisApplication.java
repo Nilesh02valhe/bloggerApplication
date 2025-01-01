@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class BlogApsApisApplication {
 	
-//	private static final Logger logger = Logger.getLogger(BlogApsApisApplication.class);
+	private static final Logger logger = Logger.getLogger(BlogApsApisApplication.class);
 	public static void main(String[] args) {
 		SpringApplication.run(BlogApsApisApplication.class, args);
 		
