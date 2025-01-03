@@ -13,7 +13,8 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.util.*;
-
+import org.springframework.stereotype.Service;
+@Service
 public class CategoryServiceImpl implements CategoryService{
 	
 	@Autowired
@@ -57,8 +58,7 @@ public class CategoryServiceImpl implements CategoryService{
 
 	@Override
 	public List<CategoryDto> getCategories() {
-		List<Category> categories = this.categoryRepo.findAll();
-		
+		List<Category> categories = this.categoryRepo.findAll();		
 		List<CategoryDto> catDtos = categories.stream().map((cat)-> this.modelMapper.
 				map(cat, CategoryDto.class)).collect(Collectors.toList());
 		return catDtos;
