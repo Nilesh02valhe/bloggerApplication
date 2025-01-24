@@ -13,6 +13,6 @@ public interface PostRepo extends JpaRepository<Post, Integer>{
 	
 	List<Post> findByUser(User user);
 	
-	List<Category> findBycategory(Category category);
+	List<Post> findBycategory(Category category);
 
 }

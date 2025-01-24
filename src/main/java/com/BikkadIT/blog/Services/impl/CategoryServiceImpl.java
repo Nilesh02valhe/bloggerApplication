@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.apache.log4j.Logger;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.util.*;
@@ -22,9 +23,12 @@ public class CategoryServiceImpl implements CategoryService{
 	
 	@Autowired
 	private ModelMapper modelMapper;
-
+	
+	private static final Logger logger = Logger.getLogger(UserServiceImpl.class);
+	
 	@Override
 	public CategoryDto createCategory(CategoryDto categoryDto) {
+		logger.info("Finding category started categoryDto: "+ categoryDto );
 		Category cat = this.modelMapper.map(categoryDto, Category.class);
 		Category addedcat = this.categoryRepo.save(cat);
 		return this.modelMapper.map(addedcat, CategoryDto.class);
@@ -34,10 +38,12 @@ public class CategoryServiceImpl implements CategoryService{
 	public CategoryDto updateCategory(CategoryDto categoryDto, Integer categoryId) {
 		Category cat = this.categoryRepo.findById(categoryId)
 		.orElseThrow(()-> new ResourceNotFoundException("Catergory", "Category Id", categoryId));
+		logger.info("category finding ..."+ categoryId);
 		cat.setCategoryTitle(categoryDto.getCategotyTitle());
 		cat.setCategoryDescription(categoryDto.getCategoryDescription());
 		Category updatedcat = this.categoryRepo.save(cat);
 //		cat.setCategoryId(categoryDto.getCategoryId());
+		logger.info("category finding ..."+ categoryDto);
 		return this.modelMapper.map(updatedcat, CategoryDto.class);
 	}
 
@@ -46,6 +52,7 @@ public class CategoryServiceImpl implements CategoryService{
 		
 		Category cat = this.categoryRepo.findById(categoryId)
 		.orElseThrow(()-> new ResourceNotFoundException("Category", "categoryId", categoryId));
+		logger.info("category finding ..."+ categoryId);
 	}
 
 	@Override
@@ -53,6 +60,7 @@ public class CategoryServiceImpl implements CategoryService{
 		Category cat = this.categoryRepo.findById(categoryId)
 		.orElseThrow(()-> new ResourceNotFoundException("Category", "categoryId", categoryId));
 //		this.categoryRepo.save(cat);
+		logger.info("category finding ..."+ categoryId);
 		return this.modelMapper.map(cat, CategoryDto.class);
 	}
 
@@ -63,5 +71,5 @@ public class CategoryServiceImpl implements CategoryService{
 				map(cat, CategoryDto.class)).collect(Collectors.toList());
 		return catDtos;
 	}
-	
+//	Ahankari drush swabhav    lalchi shree     baherial vekti chi mahiti lini tr
 }	

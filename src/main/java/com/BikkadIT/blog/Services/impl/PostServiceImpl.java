@@ -2,7 +2,10 @@ package com.BikkadIT.blog.Services.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
+import org.apache.log4j.Logger;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,16 +35,19 @@ public class PostServiceImpl implements PostService {
 	
 	@Autowired
 	private CategoryRepo categoryRepo;
-
+	
+	private static final Logger logger = Logger.getLogger(UserServiceImpl.class);
 
 	@Override
 	public PostDto createPost(PostDto postDto, Integer userId, Integer categoryId) {
 		User user = this.userRepo.findById(userId).orElseThrow(()->
 		new ResourceNotFoundException("User", "user id", userId));
+		
+		logger.info("Finding post started userDto: "+ postDto );
 
 		Category category = this.categoryRepo.findById(categoryId).orElseThrow(()->
 		new ResourceNotFoundException("Category", "Category id", categoryId));
-			
+		logger.info("categoryId finding ..."+ categoryId);
 			Post post = this.modelMapper.map(postDto, Post.class);
 			post.setImagename("default.png");
 			post.setAddedDate(new Date());
@@ -77,25 +83,27 @@ public class PostServiceImpl implements PostService {
 
 
 	@Override
-	public List<Category> getPostsByCategory(Integer categoryId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<PostDto> getPostsByCategory(Integer categoryId) {
+		Category cat = this.categoryRepo.findById(categoryId).
+				orElseThrow(()-> new ResourceNotFoundException("category","category Id", categoryId));
+	List<Post> posts= this.postRepo.findBycategory(cat);
+	logger.info("categoryId finding ..."+ categoryId);
+	List<PostDto> postDtos = posts.stream().map((post) -> this.modelMapper.map(posts, PostDto.class)).collect(Collectors.toList());
+		return postDtos;
 	}
-
 	@Override
-	public List<User> getPostsByUser(Integer userId) {
-		// TODO Auto-generated method stub
+	public List<PostDto> getPostsByUser(Integer userId) {
+		
+		Optional<Category> byId = this.categoryRepo.findById(userId);
+		
+		logger.info("userId finding ..."+ userId);
 		return null;
 	}
-
 	@Override
 	public List<Post> serchPosts(String keyword) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-
-
 }
 
 
