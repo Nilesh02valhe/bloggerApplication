@@ -71,5 +71,5 @@ public class CategoryServiceImpl implements CategoryService{
 				map(cat, CategoryDto.class)).collect(Collectors.toList());
 		return catDtos;
 	}
-//	Ahankari drush swabhav    lalchi shree     baherial vekti chi mahiti lini tr
+
 }	

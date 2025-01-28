@@ -19,6 +19,7 @@ import com.BikkadIT.blog.Repository.CategoryRepo;
 import com.BikkadIT.blog.Repository.PostRepo;
 import com.BikkadIT.blog.Repository.UserRepo;
 import com.BikkadIT.blog.Services.PostService;
+//import com.BikkadIT.blog.Services.PostService;
 
 
 @Service
@@ -37,6 +38,8 @@ public class PostServiceImpl implements PostService {
 	private CategoryRepo categoryRepo;
 	
 	private static final Logger logger = Logger.getLogger(UserServiceImpl.class);
+
+	private Optional<Category> byId;
 
 	@Override
 	public PostDto createPost(PostDto postDto, Integer userId, Integer categoryId) {
@@ -94,8 +97,8 @@ public class PostServiceImpl implements PostService {
 	@Override
 	public List<PostDto> getPostsByUser(Integer userId) {
 		
-		Optional<Category> byId = this.categoryRepo.findById(userId);
-		
+		 User user = this.userRepo.findById(userId).orElseThrow(()->
+		 new ResourceNotFoundException("User", "userId", userId));	
 		logger.info("userId finding ..."+ userId);
 		return null;
 	}

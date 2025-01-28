@@ -33,12 +33,13 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
+	private static final Logger logger = Logger.getLogger(UserController.class);
+	
 //	post====create user
 	@PostMapping("/")
 	public ResponseEntity<UserDto> createUser(@Valid  @RequestBody UserDto userDto ){
-		
-		UserDto createUserDto = this.userService.createUser(userDto);
-		
+		logger.info("create User");
+		UserDto createUserDto = this.userService.createUser(userDto);		
 		System.out.println("Input Data: " + userDto);
 		return new ResponseEntity<UserDto>(createUserDto,HttpStatus.CREATED);
 
@@ -46,7 +47,9 @@ public class UserController {
 	}
 //	put====Update user
 	@PutMapping("/{userId}")
-	public ResponseEntity<UserDto> UpdateUser(@Valid @RequestBody UserDto userDto, @PathVariable("userId") Integer uid){
+	public ResponseEntity<UserDto> UpdateUser(@Valid @RequestBody UserDto userDto,
+			@PathVariable("userId") Integer uid){
+		logger.info("Update User: "+uid);
 		UserDto updateUser = this.userService.UpadateUser(userDto, uid);
 		return ResponseEntity.ok(updateUser);
 
@@ -56,6 +59,7 @@ public class UserController {
 //	delete ==== delete user
 	@DeleteMapping("/{userId}")
 	public ResponseEntity<?> DeleteUser(@PathVariable("userId") Integer uid ){
+		logger.info("Delete User: "+uid);
 		this.userService.deleteUser(uid);
 		return new  ResponseEntity<ApiResponse>(new ApiResponse("User Deleted Successfully", true),HttpStatus.OK);
 		
@@ -64,14 +68,14 @@ public class UserController {
 	
 	@GetMapping("/")
 	public ResponseEntity<List<UserDto>> getAllUsers(){
-		
+		logger.info("Get User");
 		return ResponseEntity.ok(this.userService.getAllUsers());
 		
 	}
 //	get Single user
 	@GetMapping("/{userId}")
 	public ResponseEntity<UserDto> getSingle(@PathVariable Integer userId){
-		
+		logger.info("Single User");
 		return ResponseEntity.ok(this.userService.getUserById(userId));		
 	}
 	

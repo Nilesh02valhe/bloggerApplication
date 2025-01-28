@@ -2,6 +2,7 @@ package com.BikkadIT.blog.Controllers;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,13 +24,15 @@ public class PostController {
 	@Autowired
 	private PostService postService; 
 	
+	private static final Logger logger = Logger.getLogger(UserController.class);
+	
 	@PostMapping("/user/{userId}/category/{categoryId}/posts")
 	public ResponseEntity<PostDto> createPost(
 			@RequestBody PostDto postDto,
 			@PathVariable Integer userId, 
 			@PathVariable Integer categoryId){
-		PostDto createpost = this.postService.createPost(postDto, userId, categoryId);
-		
+		logger.info("create by Post");
+		PostDto createpost = this.postService.createPost(postDto, userId, categoryId);	
 		return new ResponseEntity<PostDto>(createpost, HttpStatus.CREATED);
 		
 	}
@@ -39,10 +42,8 @@ public class PostController {
 	@GetMapping("/user/{userId}/posts")
 	public ResponseEntity<List<PostDto>> getPostsByUser(
 			@PathVariable Integer userId){
-		
-		List<PostDto> posts = this.postService.getPostsByUser(userId);
-		
-		
+		logger.info("Get by User");
+		List<PostDto> posts = this.postService.getPostsByUser(userId);		
 		return new ResponseEntity<List<PostDto>>(posts, HttpStatus.OK) ;
 		
 	}
@@ -53,10 +54,8 @@ public class PostController {
 	@GetMapping("/category/{categoryId}/posts")
 	public ResponseEntity<List<PostDto>> getPostsByCategory(
 			@PathVariable Integer categoryId){
-		
-		List<PostDto> posts = this.postService.getPostsByCategory(categoryId);
-		
-		
+		logger.info("Get by Category");
+		List<PostDto> posts = this.postService.getPostsByCategory(categoryId);		
 		return new ResponseEntity<List<PostDto>>(posts, HttpStatus.OK) ;
 		
 	}
