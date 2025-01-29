@@ -52,6 +52,15 @@ public class PostController {
 		logger.info("Get by Category");
 		List<PostDto> posts = this.postService.getPostsByCategory(categoryId);
 		return new ResponseEntity<List<PostDto>>(posts, HttpStatus.OK);
+		
+//		get all posts
+		@GetMapping("")
+		public ResponseEntity<List<PostDto>> getAllPost(){
+			List<PostDto> allPost = this.postService.getAllPost();
+			return new ResponseEntity<List<PostDto>>(allPost, HttpStatus.OK);
+		}
+		
+//		get post details by id
 
 	}
 }
