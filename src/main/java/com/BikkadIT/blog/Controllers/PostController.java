@@ -20,43 +20,38 @@ import com.BikkadIT.blog.Services.PostService;
 @RestController
 @RequestMapping("/apis/")
 public class PostController {
-	
+
 	@Autowired
-	private PostService postService; 
-	
+	private PostService postService;
+
 	private static final Logger logger = Logger.getLogger(UserController.class);
-	
+
 	@PostMapping("/user/{userId}/category/{categoryId}/posts")
-	public ResponseEntity<PostDto> createPost(
-			@RequestBody PostDto postDto,
-			@PathVariable Integer userId, 
-			@PathVariable Integer categoryId){
+	public ResponseEntity<PostDto> createPost(@RequestBody PostDto postDto, @PathVariable Integer userId,
+			@PathVariable Integer categoryId) {
 		logger.info("create by Post");
-		PostDto createpost = this.postService.createPost(postDto, userId, categoryId);	
+		PostDto createpost = this.postService.createPost(postDto, userId, categoryId);
 		return new ResponseEntity<PostDto>(createpost, HttpStatus.CREATED);
-		
-	}
-	
-//	get By User
-	
-	@GetMapping("/user/{userId}/posts")
-	public ResponseEntity<List<PostDto>> getPostsByUser(
-			@PathVariable Integer userId){
-		logger.info("Get by User");
-		List<PostDto> posts = this.postService.getPostsByUser(userId);		
-		return new ResponseEntity<List<PostDto>>(posts, HttpStatus.OK) ;
-		
+
 	}
 
-	
+//	get By User
+
+	@GetMapping("/user/{userId}/posts")
+	public ResponseEntity<List<PostDto>> getPostsByUser(@PathVariable Integer userId) {
+		logger.info("Get by User");
+		List<PostDto> posts = this.postService.getPostsByUser(userId);
+		return new ResponseEntity<List<PostDto>>(posts, HttpStatus.OK);
+
+	}
+
 //	get By Category
-	
+
 	@GetMapping("/category/{categoryId}/posts")
-	public ResponseEntity<List<PostDto>> getPostsByCategory(
-			@PathVariable Integer categoryId){
+	public ResponseEntity<List<PostDto>> getPostsByCategory(@PathVariable Integer categoryId) {
 		logger.info("Get by Category");
-		List<PostDto> posts = this.postService.getPostsByCategory(categoryId);		
-		return new ResponseEntity<List<PostDto>>(posts, HttpStatus.OK) ;
-		
+		List<PostDto> posts = this.postService.getPostsByCategory(categoryId);
+		return new ResponseEntity<List<PostDto>>(posts, HttpStatus.OK);
+
 	}
 }
