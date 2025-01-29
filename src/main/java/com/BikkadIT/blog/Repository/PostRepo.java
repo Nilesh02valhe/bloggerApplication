@@ -1,5 +1,6 @@
 package com.BikkadIT.blog.Repository;
 
+import java.awt.print.Pageable;
 import java.util.List;
 
 
@@ -14,5 +15,9 @@ public interface PostRepo extends JpaRepository<Post, Integer>{
 	List<Post> findBycategory(Category category);
 	
 	List<Post> findByUser(User user);
+	
+	List<Post> findByTitleContaining(String title);
+
+	
 
 }

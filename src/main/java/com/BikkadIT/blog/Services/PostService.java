@@ -19,10 +19,9 @@ public interface PostService {
 	void deletePost(Integer postId);
 	
 //	get All Post
-	
-	List<PostDto> getAllPost(); 
-//	 Get Single Post
-	
+	List<PostDto> getAllPost(Integer pageNumber, Integer pageSize);
+	 
+//	 Get Single Post	
 	PostDto getPostById(Integer postId);
 	
 //	get All Post in Category	
@@ -33,5 +32,7 @@ public interface PostService {
 	
 //	Serch post
 	List<Post> serchPosts(String keyword);
+
+	
 	
 }
